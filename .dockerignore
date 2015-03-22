@@ -1,0 +1,5 @@
+*~
+.git*
+.vagrant/*
+provisioning/*
+*.DS_Store
