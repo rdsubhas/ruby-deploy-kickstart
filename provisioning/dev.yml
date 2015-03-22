@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: yes
+  sudo: yes
+
+  roles:
+    - ruby
+
+  # Development-specific tasks
+  # If they get too large, make them a role as well
+  tasks:
+    - name: Run bundle install
+      shell: bundle install chdir=/vagrant
+
+    # For Rails apps, you can also initialize the Database here
+    # shell: bundle exec rake db:create db:migrate

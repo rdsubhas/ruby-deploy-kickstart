@@ -1,0 +1,31 @@
+---
+- name: Add Ruby repository
+  apt_repository: repo='ppa:brightbox/ruby-ng'
+
+- name: Install packages
+  apt: name={{ item }} state=present
+  with_items:
+    - build-essential
+    - git
+    - libxml2-dev
+    - libxslt1-dev
+    - libssl-dev
+    - zlib1g-dev
+    - nodejs
+    - curl
+    - wget
+    - ruby2.2
+    - ruby2.2-dev
+    - ruby-switch
+
+- name: Dont install gem docs, they will slow down gem install
+  lineinfile: "dest=/etc/gemrc line='gem: --no-ri --no-rdoc' create=yes"
+
+- name: Check bundler is installed or not
+  shell: bundle -v
+  register: bundler_present
+  ignore_errors: True
+
+- name: Install bundler if not yet present
+  shell: gem install bundler
+  when: bundler_present|failed
