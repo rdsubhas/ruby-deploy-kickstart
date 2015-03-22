@@ -5,12 +5,12 @@ require 'json'
 
 class Myapp < Sinatra::Base
   configure :development do
-    set :bind, '0.0.0.0'
-    set :logging, true
-    
     register Sinatra::Reloader
     use Rack::MiniProfiler
   end
+
+  set :bind, '0.0.0.0'
+  set :logging, true
 
   get '/' do
     config = ENV.select{ |k,v| k =~ /^MYAPP_/ }
