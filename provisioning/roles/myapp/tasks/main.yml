@@ -17,7 +17,9 @@
     - "{{myapp_home}}/gems"
     - "{{myapp_code}}"
 
-# From now on, do stuff as {{myapp_user}} to preserve permissions
+###
+### Running stuff as {{myapp_user}} whenever permissions need to be preserved
+###
 
 - name: Clone application repository
   git: >
@@ -46,6 +48,10 @@
   args:
     chdir: "{{myapp_code}}"
   sudo_user: "{{myapp_user}}"
+
+### At this point, you may want to run any custom tasks
+### (like db:migrate, assets:precompile, etc)
+### Just like the bundle install above
 
 - name: Create system service
   shell: >
