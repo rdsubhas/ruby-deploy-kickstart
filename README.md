@@ -8,10 +8,15 @@ Read the [blog post](https://medium.com/@rdsubhas/36d7ab726d99) for more details
 
 ## Structure
 
-* Core application files: `myapp.rb, myapp.ru, myjobs.rb`
-* The default `.env` file is suitable for development mode
-* For production mode, it is overwritten with the `.env` from `roles/myapp/files`
-* In production, logs will be under `/var/log/upstart/`
+**NOTE:** The files will look overwhelming at first, because they contain Vagrant, Ansible and Docker. You don't need everything. If you don't want Docker, get rid of Docker-related files. Similarly, if you don't want Ansible or Vagrant, get rid of those files.
+
+* Core application files are: `myapp.rb, myapp.ru, myjobs.rb`
+* Core supporting files are:  `.env`, `Procfile`, `Gemfile*`, `provisioning/roles/myapp/files/.env`
+  * The default `.env` file is suitable for development mode
+  * In production, it is overwritten with `provisioning/roles/myapp/files/.env`
+* Docker: `.dockerignore, Dockerfile`
+* Vagrant: `Vagrantfile`
+* Ansible: `provisioning/*`
 
 ## Development
 
@@ -41,5 +46,5 @@ Read the [blog post](https://medium.com/@rdsubhas/36d7ab726d99) for more details
 * Modify them to fit, especially:
   * Procfile commands
   * roles/myapp/
-* Encrypt production configuration
-  * `myapp/files` should be encrypted
+* Encrypt production configuration (using git-crypt, ansible vault, or anything else)
+  * `provisioning/roles/myapp/files` should be encrypted
