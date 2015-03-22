@@ -20,9 +20,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "prod", autostart: false do |prod|
     prod.vm.provision "ansible" do |ansible|
       ansible.playbook = 'provisioning/prod.yml'
-      ansible.extra_vars = { shared_volume: "" }
       ansible.verbose = 'vvv'
     end
+  end
+
+  # Production VM with Docker Build
+  config.vm.define "docker", autostart: false do |docker|
+    docker.vm.provision "shell", inline: <<-SCRIPT
+      echo "Installing Docker..."
+      which docker || (curl -sSL https://get.docker.com/ | sh)
+    SCRIPT
+    docker.vm.provision "shell", inline: <<-SCRIPT
+      cd /vagrant
+
+      echo "Building myapp docker image..."
+      docker build -t myapp .
+
+      echo "Running myapp docker image..."
+      docker run \
+        --env-file=provisioning/roles/myapp/files/.env \
+        --publish=3000:3000 \
+        --name=myapp \
+        --detach=true \
+        myapp
+    SCRIPT
   end
 
   # Use vagrant-cachier to cache apt-get, gems and other stuff across machines

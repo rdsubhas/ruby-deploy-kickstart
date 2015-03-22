@@ -41,7 +41,7 @@
 
 - name: Bundle install in deployment mode
   shell: >
-    bundle install --deployment --clean --without development,test
+    bundle install --deployment --clean --without development test
   args:
     chdir: "{{myapp_repo}}"
   sudo_user: "{{myapp_user}}"
