@@ -1,0 +1,8 @@
+---
+myapp_gid: 6156
+myapp_group: myapp
+myapp_uid: 6157
+myapp_user: myapp
+myapp_home: /home/myapp
+myapp_code: /home/myapp/codebase
+myapp_repo: https://github.com/rdsubhas/ruby-deploy-kickstart.git
