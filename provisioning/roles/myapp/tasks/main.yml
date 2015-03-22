@@ -15,7 +15,7 @@
   with_items:
     - "{{myapp_home}}"
     - "{{myapp_home}}/gems"
-    - "{{myapp_code}}"
+    - "{{myapp_repo}}"
 
 ###
 ### Running stuff as {{myapp_user}} whenever permissions need to be preserved
@@ -23,11 +23,8 @@
 
 - name: Clone application repository
   git: >
-    repo={{myapp_repo}}
-    dest={{myapp_code}} 
-    version=master 
-    accept_hostkey=yes 
-    force=yes
+    repo={{myapp_repo_url}} dest={{myapp_repo}} 
+    version=master accept_hostkey=yes force=yes
   sudo_user: "{{myapp_user}}"
   # For private apps, copy the key file and specify "key_file" in the git task
   # Use git-crypt, ansible-vault or anything that you want
@@ -35,18 +32,18 @@
 
 - name: Copy dotEnv for this server
   copy: >
-    src=.env dest={{myapp_code}}/.env owner={{myapp_user}} group={{myapp_group}} mode=0600
+    src=.env dest={{myapp_repo}}/.env owner={{myapp_user}} group={{myapp_group}} mode=0600
 
 - name: Symlink persistent folders
   file: state=link force=yes src={{item.src}} dest={{item.dest}}
   with_items:
-    - { src: "{{myapp_home}}/gems", dest: "{{myapp_code}}/vendor/bundle" }
+    - { src: "{{myapp_home}}/gems", dest: "{{myapp_repo}}/vendor/bundle" }
 
 - name: Bundle install in deployment mode
   shell: >
     bundle install --deployment --clean --without development,test
   args:
-    chdir: "{{myapp_code}}"
+    chdir: "{{myapp_repo}}"
   sudo_user: "{{myapp_user}}"
 
 ### At this point, you may want to run any custom tasks
@@ -57,7 +54,7 @@
   shell: >
     PATH=$(pwd):$PATH bundle exec foreman export -a myapp -u {{myapp_user}} upstart /etc/init/
   args:
-    chdir: "{{myapp_code}}"
+    chdir: "{{myapp_repo}}"
 
 - name: Restart service and enable at boot
   service: name=myapp state=restarted enabled=yes

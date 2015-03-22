@@ -6,6 +6,13 @@ Copy this over to your project, and modify to fit.
 
 Read the [blog post](https://medium.com/@rdsubhas/36d7ab726d99) for more details.
 
+## Structure
+
+* Core application files: `myapp.rb, myapp.ru, myjobs.rb`
+* The default `.env` file is suitable for development mode
+* For production mode, it is overwritten with the `.env` from `roles/myapp/files`
+* In production, logs will be under `/var/log/upstart/`
+
 ## Development
 
 * Install Vagrant and VirtualBox
@@ -24,12 +31,6 @@ Read the [blog post](https://medium.com/@rdsubhas/36d7ab726d99) for more details
 ## Re-provisioning
 
 * Run `vagrant provision dev` or `vagrant provision prod`
-
-## Structure
-
-* The default `.env` file is suitable for development mode
-* For production mode, it is overwritten with the `.env` from `roles/myapp/files`
-* In production, logs will be under `/var/log/upstart/`
 
 ## PENDING:
 
