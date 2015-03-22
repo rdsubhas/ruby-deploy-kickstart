@@ -1,6 +1,10 @@
 # Ruby (and Rails) Depoyment Kickstart
 
-A template for deploying Ruby and Rails applications. Copy this over to your project, and modify to fit.
+A template for deploying Ruby and Rails applications.
+
+Copy this over to your project, and modify to fit.
+
+Read the [blog post](https://medium.com/@rdsubhas/36d7ab726d99) for more details.
 
 ## Development
 
