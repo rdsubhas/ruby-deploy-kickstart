@@ -22,19 +22,17 @@ Read the [blog post](https://medium.com/@rdsubhas/36d7ab726d99) for more details
   * Or if you have installed vagrant-exec, simply run `vagrant exec foreman start`
 * Go to `localhost:3000`, it will echo you a message with development configurations
 
-## Production
+## Production Server
 
-* Stop the Dev VM: `vagrant halt dev`
+* Stop everything else: `vagrant halt`
 * Start the Prod VM: `vagrant up prod`
 * Go to `localhost:3000`, it will echo you the same message with production configuration
 
-## Re-provisioning
+## Production using Docker
 
-* Run `vagrant provision dev` or `vagrant provision prod`
-
-## PENDING:
-
-* Dockerfile
+* Stop everything else: `vagrant halt`
+* Start the Docker VM: `vagrant up docker`
+* Go to `localhost:3000`, it will echo you the same message with production configuration, except things are running using Docker now
 
 ## Using it in your project:
 
