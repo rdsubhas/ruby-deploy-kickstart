@@ -25,7 +25,9 @@ Read the [blog post](https://medium.com/@rdsubhas/36d7ab726d99) for more details
   * Or if you have installed vagrant-exec, simply run `vagrant exec foreman start`
 * Go to `localhost:3000`, it will echo you a message with development configurations
 
-## Production Server
+## Production using Ansible
+
+**NOTE:** Supports only Debian and Ubuntu for now.
 
 * Stop everything else: `vagrant halt`
 * Start the Prod VM: `vagrant up prod`
@@ -33,9 +35,16 @@ Read the [blog post](https://medium.com/@rdsubhas/36d7ab726d99) for more details
 
 ## Production using Docker
 
+**NOTE:** Supports any OS that can run Docker, not limited to Debian/Ubuntu.
+
 * Stop everything else: `vagrant halt`
 * Start the Docker VM: `vagrant up docker`
 * Go to `localhost:3000`, it will echo you the same message with production configuration, except things are running using Docker now
+
+## In case of errors
+
+* Destroy the VMs: `vagrant destroy`
+* Start whatever you want up again
 
 ## Using it in your project:
 
