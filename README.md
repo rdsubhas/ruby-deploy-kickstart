@@ -2,7 +2,7 @@
 
 A template for deploying Ruby and Rails applications, with automation support for Ansible, Docker and Vagrant. Copy this over to your project, and modify to fit.
 
-Read the [blog post](https://medium.com/@rdsubhas/36d7ab726d99) for more details.
+Read the accompanying [blog post](https://medium.com/@rdsubhas/ruby-in-production-lessons-learned-36d7ab726d99) for more details.
 
 ## Structure
 
