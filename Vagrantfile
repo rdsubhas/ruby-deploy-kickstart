@@ -5,11 +5,11 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.network 'forwarded_port', :guest => 3000, :host => 3000
+  config.vm.network 'forwarded_port', guest: 3000, host: 3000
 
   # Development VM
   config.vm.define "dev", primary: true do |dev|
+    dev.vm.box = "ubuntu/trusty64"
     dev.vm.provision "ansible" do |ansible|
       ansible.playbook = 'provisioning/dev.yml'
       ansible.verbose = 'vvv'
@@ -18,6 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Production VM
   config.vm.define "prod", autostart: false do |prod|
+    prod.vm.box = "ubuntu/trusty64"
     prod.vm.provision "ansible" do |ansible|
       ansible.playbook = 'provisioning/prod.yml'
       ansible.verbose = 'vvv'
@@ -26,15 +27,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Production VM with Docker Build
   config.vm.define "docker", autostart: false do |docker|
-    docker.vm.provision "shell", inline: <<-SCRIPT
-      echo "Installing Docker..."
-      which docker || (curl -sSL https://get.docker.com/ | sh)
-    SCRIPT
+    docker.vm.box = "yungsang/boot2docker"
+    docker.vm.synced_folder ".", "/vagrant"
     docker.vm.provision "shell", inline: <<-SCRIPT
       cd /vagrant
 
       echo "Building myapp docker image..."
       docker build -t myapp .
+
+      echo "Killing old myapp container..."
+      (docker kill myapp && docker rm myapp) || echo "Not running"
 
       echo "Running myapp docker image..."
       docker run \
