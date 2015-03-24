@@ -19,7 +19,7 @@ Read the accompanying [blog post](https://medium.com/@rdsubhas/ruby-in-productio
 ## Development
 
 * Install Vagrant and VirtualBox
-  * Preferably, install `vagrant-cachier`, `vagrant-exec` and `vagrant-faster` plugins
+  * Preferably, install `vagrant-cachier`, `vagrant-exec` and `vagrant-faster` plugins for a faster development experience
 * Run: `vagrant up`
 * Run: `vagrant ssh` > `cd /vagrant` > `foreman start`
   * Or if you have installed vagrant-exec, simply run `vagrant exec foreman start`
@@ -27,19 +27,38 @@ Read the accompanying [blog post](https://medium.com/@rdsubhas/ruby-in-productio
 
 ## Production using Ansible
 
-**NOTE:** Supports only Debian and Ubuntu for now.
+*Supports only Debian and Ubuntu for now*
+
+#### Testing:
 
 * Stop everything else: `vagrant halt`
 * Start the Prod VM: `vagrant up prod`
 * Go to `localhost:3000`, it will echo you the same message with production configuration
 
+#### Actual Deployment:
+
+* Go to `provisioning` folder
+* Edit `prod_inventory` and update your production server name
+* Run: `ansible-playbook -i prod_inventory -u <username> -vvv prod.yml`
+
 ## Production using Docker
 
-**NOTE:** Supports any OS that can run Docker, not limited to Debian/Ubuntu.
+*Supports any OS that can run Docker, not limited to Debian/Ubuntu*
+
+#### Testing:
 
 * Stop everything else: `vagrant halt`
 * Start the Docker VM: `vagrant up docker`
 * Go to `localhost:3000`, it will echo you the same message with production configuration, except things are running using Docker now
+
+#### Actual Deployment:
+
+* Check the Docker section in `Vagrantfile` for the build and run commands
+* A full discussion of Docker is beyond the scope of this, but the gist is:
+  * Build the Docker image (can be done locally or on the server)
+  * Push it to a registry (not needed if you built on the server)
+  * Run it in the server
+  * For exact commands, check the Docker section in `Vagrantfile`
 
 ## In case of errors
 
