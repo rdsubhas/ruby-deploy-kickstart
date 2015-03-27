@@ -1,4 +1,4 @@
-# Ruby (and Rails) Depoyment Kickstart
+# Ruby (and Rails) Deployment Kickstart
 
 A template for deploying Ruby and Rails applications, with automation support for Ansible, Docker and Vagrant. Copy this over to your project, and modify to fit.
 
